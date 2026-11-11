@@ -422,7 +422,7 @@ function renderLegend(){
  $('#legend').innerHTML='<b>'+({type:'ประเภทสถานที่',access:'การคิดเงิน',band:'ระยะทาง'})[S.colorBy]+'</b>'+rows.filter(r=>r[3]>0).map(r=>'<span><i class="'+(r[2]?'sq':'')+'" style="background:'+r[0]+'"></i>'+esc(r[1])+' · '+r[3]+'</span>').join('')+'<span class="shp">● สนามกีฬา/ยิม &nbsp; ■ บริการเสริม</span>'}
 
 /* ---------- colour settings ---------- */
-const DEFCFG={t:TYPES.map(x=>x[1]),a:ACCESS.map(x=>x[1]),b:BANDS.map(x=>x[2]),land:'#ff6a3d',fill:25,wt:3,ring:'#ffffff',pin:'#ff6a3d'};
+const DEFCFG={t:TYPES.map(x=>x[1]),a:ACCESS.map(x=>x[1]),b:BANDS.map(x=>x[2]),land:'#ff6a3d',fill:25,wt:3,ring:'#ffffff',rw:1.5,dash:1,pin:'#ff6a3d'};
 const PRESETS={
  hc:{t:['#00875a','#0050d8','#7a2cd1','#d6006f','#c21807','#4c8a00','#d98e00','#007a99','#8a4b2a','#4a5560'],a:['#00875a','#d98e00','#0050d8'],b:['#00875a','#4c8a00','#d98e00','#e05a00','#c21807','#4a5560']},
  cb:{t:['#009E73','#0072B2','#CC79A7','#D55E00','#56B4E9','#E69F00','#F0E442','#6a3d9a','#999999','#444444'],a:['#009E73','#E69F00','#0072B2'],b:['#009E73','#56B4E9','#F0E442','#E69F00','#D55E00','#999999']}};
@@ -436,7 +436,7 @@ function applyCfg(){
  TYPES.forEach((x,i)=>{x[1]=CFG.t[i];TCOL[x[0]]=x[1]});ACCESS.forEach((x,i)=>{x[1]=CFG.a[i];ACOL[x[0]]=x[1]});BANDS.forEach((x,i)=>x[2]=CFG.b[i]);
  const r=document.documentElement.style;r.setProperty('--land',CFG.land);r.setProperty('--pin',CFG.pin);
  if(landPoly)landPoly.setStyle({color:CFG.land,fillColor:CFG.land,fillOpacity:CFG.fill/100,weight:CFG.wt});
- if(map&&base!=='street')rings.forEach(x=>x.setStyle({color:CFG.ring}));
+ if(map){rings.forEach(x=>x.setStyle({weight:CFG.rw,dashArray:CFG.dash?'6 6':null}));if(base!=='street')rings.forEach(x=>x.setStyle({color:CFG.ring}))}
  buildChips();syncChips();renderChipCounts();renderLegend();renderList();PLACES.forEach(styleMk);renderPresetState()}
 function renderPresetState(){
  const cur=sameArr(CFG.t,DEFCFG.t)&&sameArr(CFG.a,DEFCFG.a)&&sameArr(CFG.b,DEFCFG.b)?'def':sameArr(CFG.t,PRESETS.hc.t)&&sameArr(CFG.a,PRESETS.hc.a)&&sameArr(CFG.b,PRESETS.hc.b)?'hc':sameArr(CFG.t,PRESETS.cb.t)&&sameArr(CFG.a,PRESETS.cb.a)&&sameArr(CFG.b,PRESETS.cb.b)?'cb':'';
@@ -451,11 +451,14 @@ function colRows(){
  else h=row('สีขอบและป้ายที่ดิน','land',CFG.land)+
   '<label class="crow"><span>ความทึบพื้นที่ดิน</span><span class="ctl2"><input type="range" data-k="fill" min="0" max="70" step="5" value="'+CFG.fill+'"><output>'+CFG.fill+'%</output></span></label>'+
   '<label class="crow"><span>ความหนาเส้นขอบที่ดิน</span><span class="ctl2"><input type="range" data-k="wt" min="1" max="6" step="1" value="'+CFG.wt+'"><output>'+CFG.wt+'</output></span></label>'+
-  row('สีวงรัศมี (ดาวเทียม)','ring',CFG.ring)+row('สีหมุดที่ปักเอง','pin',CFG.pin);
+  row('สีวงรัศมี (ดาวเทียม)','ring',CFG.ring)+
+  '<label class="crow"><span>ความหนาเส้นวงรัศมี</span><span class="ctl2"><input type="range" data-k="rw" min="0.5" max="6" step="0.5" value="'+CFG.rw+'"><output>'+CFG.rw+'</output></span></label>'+
+  '<label class="crow"><span>เส้นวงรัศมีเป็นเส้นประ</span><input type="checkbox" data-k="dash"'+(CFG.dash?' checked':'')+' aria-label="เส้นประ"></label>'+row('สีหมุดที่ปักเอง','pin',CFG.pin);
  $('#colrows').innerHTML=h;
  $('#colnote').textContent=colGrp==='t'?'':(colGrp==='o'?'':'ใช้เมื่อเลือก “สีของหมุด” ให้ตรงกลุ่มนี้')}
 $('#colrows').addEventListener('input',e=>{const el=e.target,k=el.dataset.k;if(!k)return;
- if(k==='fill'||k==='wt'){CFG[k]=+el.value;el.nextElementSibling.textContent=k==='fill'?el.value+'%':el.value}
+ if(k==='fill'||k==='wt'||k==='rw'){CFG[k]=+el.value;el.nextElementSibling.textContent=k==='fill'?el.value+'%':el.value}
+ else if(k==='dash'){CFG.dash=el.checked?1:0}
  else if(/^[tab]\d+$/.test(k)){CFG[k[0]][+k.slice(1)]=el.value}
  else CFG[k]=el.value;
  if(/^[tab]\d+$/.test(k)){const cb={t:'type',a:'access',b:'band'}[k[0]];if(S.colorBy!==cb){S.colorBy=cb;document.querySelectorAll('#colorby button').forEach(x=>setPressed(x,x.dataset.v===cb))}}
@@ -464,7 +467,7 @@ function applyCfgLight(){ // update without rebuilding the open colour inputs
  TYPES.forEach((x,i)=>{x[1]=CFG.t[i];TCOL[x[0]]=x[1]});ACCESS.forEach((x,i)=>{x[1]=CFG.a[i];ACOL[x[0]]=x[1]});BANDS.forEach((x,i)=>x[2]=CFG.b[i]);
  const r=document.documentElement.style;r.setProperty('--land',CFG.land);r.setProperty('--pin',CFG.pin);
  if(landPoly)landPoly.setStyle({color:CFG.land,fillColor:CFG.land,fillOpacity:CFG.fill/100,weight:CFG.wt});
- if(map&&base!=='street')rings.forEach(x=>x.setStyle({color:CFG.ring}));
+ if(map){rings.forEach(x=>x.setStyle({weight:CFG.rw,dashArray:CFG.dash?'6 6':null}));if(base!=='street')rings.forEach(x=>x.setStyle({color:CFG.ring}))}
  document.querySelectorAll('.chip[data-t] .dot').forEach(d=>{const t=TYPES.find(x=>x[0]===d.parentNode.dataset.t);if(t)d.style.background=t[1]});
  document.querySelectorAll('.chip[data-a] .dot').forEach(d=>{const a=ACCESS.find(x=>x[0]===d.parentNode.dataset.a);if(a)d.style.background=a[1]});
  renderLegend();renderList();PLACES.forEach(styleMk);renderPresetState()}
@@ -554,7 +557,7 @@ function initMap(){
  baseLayers.osm=L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png',{maxZoom:20,maxNativeZoom:19,attribution:'© <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener">OpenStreetMap</a> contributors'});
  // rings + labels
  [3,5,10,15,20].forEach(km=>{
-  rings.push(L.circle([LAT0,LON0],{radius:km*1000,fill:false,color:CFG.ring,weight:1.4,opacity:.85,dashArray:'6 6',interactive:false}).addTo(map));
+  rings.push(L.circle([LAT0,LON0],{radius:km*1000,fill:false,color:CFG.ring,weight:CFG.rw,opacity:.85,dashArray:CFG.dash?'6 6':null,interactive:false}).addTo(map));
   L.marker([LAT0+km/KY,LON0],{icon:L.divIcon({className:'mkw',html:'<div class="ringlab">'+km+' กม.</div>',iconSize:[0,0]}),interactive:false,keyboard:false}).addTo(map)});
  // land
  const poly=landPoly=L.polygon(CORNERS,{color:CFG.land,weight:CFG.wt,fillColor:CFG.land,fillOpacity:CFG.fill/100}).addTo(map);
