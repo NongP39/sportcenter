@@ -115,8 +115,8 @@ button{cursor:pointer}
 .mk .lab{display:none;position:absolute;left:100%;top:50%;transform:translateY(-50%);margin-left:8px;white-space:nowrap;font:500 13px var(--font);color:#fff;text-shadow:0 0 3px #000,0 0 3px #000,0 0 4px #000;pointer-events:none}
 body.zl .mk .lab,.mk.sel .lab,.mk:hover .lab{display:block}
 .ringlab{font:600 12px var(--font);color:#fff;background:rgba(0,0,0,.6);padding:1px 6px;border-radius:4px}
-.landlab{font:600 13px var(--font);color:#ff8a63;text-shadow:0 0 3px #000,0 0 4px #000;white-space:nowrap;transform:translate(60%,0)}
-.cornerlab{font:600 11px var(--font);color:#fff;background:#ff6a3d;padding:1px 6px;border-radius:4px}
+.landlab{font:600 13px var(--font);color:color-mix(in srgb,var(--land) 70%,#fff);text-shadow:0 0 3px #000,0 0 4px #000;white-space:nowrap;transform:translate(60%,0)}
+.cornerlab{font:600 11px var(--font);color:#fff;background:var(--land);padding:1px 6px;border-radius:4px}
 #gsearch{width:100%}#gsearch gmp-place-autocomplete{width:100%;color-scheme:light}
 .ctl .btn{text-decoration:none;color:inherit}
 
@@ -124,13 +124,13 @@ body.zl .mk .lab,.mk.sel .lab,.mk:hover .lab{display:block}
 .ctl,.legend,.card{z-index:1100}
 .mkw{background:none!important;border:0!important}
 .mk{position:absolute;transform:translate(-50%,-50%)}
-.pinmk{position:absolute;width:22px;height:22px;background:#ff6a3d;border:3px solid #fff;border-radius:50% 50% 50% 0;transform:translate(-50%,-100%) rotate(-45deg);box-shadow:0 1px 5px rgba(0,0,0,.5)}
+.pinmk{position:absolute;width:22px;height:22px;background:var(--pin);border:3px solid #fff;border-radius:50% 50% 50% 0;transform:translate(-50%,-100%) rotate(-45deg);box-shadow:0 1px 5px rgba(0,0,0,.5)}
 .ringlab,.landlab,.cornerlab{position:absolute;white-space:nowrap}
 .ringlab{transform:translate(-50%,-50%)}
 .landlab{transform:translate(18px,-50%)}
 .cornerlab{transform:translate(-50%,-130%)}
 body.street .ringlab{background:rgba(255,255,255,.85);color:#0f6b57}
-body.street .landlab{color:#c2400f;text-shadow:0 0 3px #fff,0 0 3px #fff}
+body.street .landlab{color:color-mix(in srgb,var(--land) 65%,#000);text-shadow:0 0 3px #fff,0 0 3px #fff}
 body.street .mk .lab{color:#111;text-shadow:0 0 3px #fff,0 0 3px #fff,0 0 4px #fff}
 .leaflet-control-zoom a{color:#222}
 .gres{display:flex;flex-direction:column;margin-top:6px}
@@ -161,6 +161,29 @@ details.acc>.row,details.acc>.field,details.acc>.sub{margin-bottom:14px}
 .sub h2{margin:0 0 7px;font-size:12.5px;font-weight:600;color:var(--muted)}
 .sub+.sub{margin-top:4px}
 .gh{display:flex;justify-content:space-between;align-items:center;gap:8px;font-size:13px;color:var(--muted);padding:2px 2px 6px}.gh button{border:0;background:none;color:var(--accent);font-size:13px;font-weight:500;padding:2px 4px}
+
+.msearch{position:absolute;top:max(12px,env(safe-area-inset-top,0px));left:12px;width:min(380px,calc(100% - 24px));z-index:1200;display:flex;flex-direction:column;gap:6px}
+.mbox{display:flex;align-items:center;gap:6px;background:var(--panel);border:1px solid var(--line);border-radius:10px;box-shadow:var(--shadow);padding:4px 4px 4px 11px;color:var(--muted)}
+.mbox input{flex:1;min-width:0;border:0;background:none;outline:0;font-size:15px;padding:6px 2px;color:var(--fg)}
+.mbox:focus-within{border-color:var(--accent);box-shadow:0 0 0 2px color-mix(in srgb,var(--accent) 25%,transparent),var(--shadow)}
+#gclr{border:0;background:none;font-size:22px;line-height:1;color:var(--muted);padding:0 8px}
+.mbox .go{border:0;background:var(--accent);color:var(--accent-fg);border-radius:7px;padding:7px 13px;font-size:14px;font-weight:500}
+.mhint{margin:0;font-size:12.5px;color:var(--fg);background:var(--panel);border:1px solid var(--line);border-radius:8px;padding:5px 9px;box-shadow:var(--shadow)}
+.mhint[hidden]{display:none}
+.msearch .gres{margin:0;background:var(--panel);border:1px solid var(--line);border-radius:10px;box-shadow:var(--shadow);max-height:min(45vh,340px);overflow:auto;padding:4px 8px}
+.msearch .gres:empty{display:none}
+.msearch .gres .hint{margin:6px 2px}
+.msearch .gr{width:100%}
+.ctl.tl{top:calc(max(12px,env(safe-area-inset-top,0px)) + 52px)}
+@media (max-width:760px){.msearch{width:calc(100% - 24px)}.ctl.tl{top:calc(max(12px,env(safe-area-inset-top,0px)) + 52px)}.zoom{top:calc(max(12px,env(safe-area-inset-top,0px)) + 100px)}}
+
+.colrows{display:flex;flex-direction:column;gap:6px}
+.crow{display:grid;grid-template-columns:minmax(0,1fr) auto;align-items:center;gap:10px;font-size:14px}
+.crow input[type=color]{width:44px;height:30px;padding:0;border:1px solid var(--line);border-radius:6px;background:var(--bg);cursor:pointer}
+.crow input[type=range]{width:120px}
+.crow output{font-size:12.5px;color:var(--muted);min-width:34px;text-align:right;display:inline-block;font-variant-numeric:tabular-nums}
+.crow .ctl2{display:flex;align-items:center;gap:6px}
+:root{--land:#ff6a3d;--pin:#ff6a3d}
 </style>
 </head>
 <body>
@@ -176,13 +199,6 @@ details.acc>.row,details.acc>.field,details.acc>.sub{margin-bottom:14px}
     </div>
     <div class="scroll" id="scroll">
       <div id="pane-filters" class="pane">
-        <form class="search" id="gform" autocomplete="off">
-          <input id="gq" type="search" placeholder="ค้นหาชื่อสถานที่ กีฬา หรือพิกัด" aria-label="ค้นหาสถานที่">
-          <button type="submit">ค้นหา</button>
-        </form>
-        <p class="hint" id="qhint">พิมพ์เพื่อกรองสถานที่ที่รวบรวมไว้ กด Enter เพื่อค้นหาทั่วไทย</p>
-        <div id="gres" class="gres"></div>
-
         <div class="stats" id="stats"></div>
 
         <div class="sec"><h2>มุมมองด่วน</h2><div class="row" id="presets"></div></div>
@@ -210,6 +226,23 @@ details.acc>.row,details.acc>.field,details.acc>.sub{margin-bottom:14px}
             </div>
             <label class="check" style="margin-top:8px"><input type="checkbox" id="sizerev"> ขนาดหมุดตามจำนวนรีวิว</label></div>
         </details>
+        <details class="acc" id="colacc"><summary><span>ตั้งค่าสี</span><span class="badge" id="b-col"></span></summary>
+          <div class="sub"><h2>ชุดสีสำเร็จรูป</h2>
+            <div class="seg" id="presetseg" role="group" aria-label="ชุดสี">
+              <button type="button" data-pre="def" aria-pressed="false">ค่าเริ่มต้น</button>
+              <button type="button" data-pre="hc" aria-pressed="false">เข้มคมชัด</button>
+              <button type="button" data-pre="cb" aria-pressed="false">ตาบอดสี</button>
+            </div></div>
+          <div class="sub"><h2>เลือกกลุ่มที่จะปรับ</h2>
+            <div class="seg" id="colgrp" role="group" aria-label="กลุ่มสี">
+              <button type="button" data-g="t" aria-pressed="true">ประเภท</button>
+              <button type="button" data-g="a" aria-pressed="false">คิดเงิน</button>
+              <button type="button" data-g="b" aria-pressed="false">ระยะ</button>
+              <button type="button" data-g="o" aria-pressed="false">ที่ดิน/วง</button>
+            </div></div>
+          <div class="sub"><div id="colrows" class="colrows"></div></div>
+          <div class="sub"><button type="button" class="chip" id="colreset">คืนค่าสีเริ่มต้น</button> <span class="hint" id="colnote" style="margin:0 0 0 6px"></span></div>
+        </details>
       </div>
 
       <div id="pane-list" class="pane" hidden>
@@ -222,6 +255,16 @@ details.acc>.row,details.acc>.field,details.acc>.sub{margin-bottom:14px}
 
   <main id="mapwrap">
     <div id="map" role="application" aria-label="แผนที่สถานที่เล่นกีฬารอบที่ดิน"></div>
+    <div class="msearch" id="msearch">
+      <form class="mbox" id="gform" autocomplete="off" role="search">
+        <svg viewBox="0 0 20 20" width="18" height="18" aria-hidden="true"><circle cx="8.5" cy="8.5" r="5.5" fill="none" stroke="currentColor" stroke-width="2"/><path d="M13 13l5 5" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+        <input id="gq" type="text" inputmode="search" enterkeyhint="search" placeholder="ค้นหาสถานที่ กีฬา หรือพิกัด" aria-label="ค้นหาสถานที่">
+        <button type="button" id="gclr" aria-label="ล้างคำค้น" hidden>×</button>
+        <button type="submit" class="go">ค้นหา</button>
+      </form>
+      <p class="mhint" id="qhint" hidden></p>
+      <div id="gres" class="gres"></div>
+    </div>
     <div class="ctl tl">
       <button class="btn" id="togglepanel" type="button" aria-label="ซ่อนหรือแสดงแผงข้อมูล">แผงข้อมูล</button>
       <button class="btn" id="pintool" type="button" aria-pressed="false">วางหมุดวัดระยะ</button>
@@ -260,7 +303,7 @@ const fmt=n=>Number(n).toLocaleString('th-TH');
 PLACES.forEach(p=>{p.svc=p.g==='บริการเสริม'});
 
 const S={q:'',layers:{sport:true,svc:true},types:new Set(),sports:new Set(),access:new Set(),maxR:99,colorBy:'type',sizeRev:false,sel:null,tool:false};
-let map=null,VIS=[],pinMk=null,base='sathy',baseLayers={},rings=[],cornerMks=[],mgroup=null;
+let map=null,VIS=[],pinMk=null,base='sathy',baseLayers={},rings=[],cornerMks=[],mgroup=null,landPoly=null;
 
 function colorOf(p){if(S.colorBy==='access')return ACOL[p.ac]||'#888';if(S.colorBy==='band')return bandOf(p.d)[2];return TCOL[p.t]||'#888'}
 function radiusOf(p){return S.sizeRev?Math.min(15,4.5+Math.sqrt(p.rv||0)*0.22):6}
@@ -326,7 +369,8 @@ function showLand(){const rai=LAND_AREA/1600;
 function hav(la1,lo1,la2,lo2){const R=6371.0088,r=Math.PI/180,a=Math.sin((la2-la1)*r/2)**2+Math.cos(la1*r)*Math.cos(la2*r)*Math.sin((lo2-lo1)*r/2)**2;return 2*R*Math.asin(Math.sqrt(a))}
 let searchTok=0;
 function clearPin(){if(pinMk&&map){map.removeLayer(pinMk)}pinMk=null}
-function clearResults(){searchTok++;$('#gres').innerHTML='';$('#gq').value='';$('#qhint').textContent=HINT;if(S.q){S.q='';refilter()}}
+function setHint(s){const h=$('#qhint');h.textContent=s||'';h.hidden=!s}
+function clearResults(){searchTok++;$('#gres').innerHTML='';$('#gq').value='';setHint('');$('#gclr').hidden=true;if(S.q){S.q='';refilter()}}
 function closePin(){clearPin();hideCard();clearResults()}
 function dropPin(la,lo,title,addr){
  if(!map)return;
@@ -377,6 +421,58 @@ function renderLegend(){
  else rows=BANDS.map(b=>[b[2],b[1],0,VIS.filter(p=>bandOf(p.d)===b).length]);
  $('#legend').innerHTML='<b>'+({type:'ประเภทสถานที่',access:'การคิดเงิน',band:'ระยะทาง'})[S.colorBy]+'</b>'+rows.filter(r=>r[3]>0).map(r=>'<span><i class="'+(r[2]?'sq':'')+'" style="background:'+r[0]+'"></i>'+esc(r[1])+' · '+r[3]+'</span>').join('')+'<span class="shp">● สนามกีฬา/ยิม &nbsp; ■ บริการเสริม</span>'}
 
+/* ---------- colour settings ---------- */
+const DEFCFG={t:TYPES.map(x=>x[1]),a:ACCESS.map(x=>x[1]),b:BANDS.map(x=>x[2]),land:'#ff6a3d',fill:25,wt:3,ring:'#ffffff',pin:'#ff6a3d'};
+const PRESETS={
+ hc:{t:['#00875a','#0050d8','#7a2cd1','#d6006f','#c21807','#4c8a00','#d98e00','#007a99','#8a4b2a','#4a5560'],a:['#00875a','#d98e00','#0050d8'],b:['#00875a','#4c8a00','#d98e00','#e05a00','#c21807','#4a5560']},
+ cb:{t:['#009E73','#0072B2','#CC79A7','#D55E00','#56B4E9','#E69F00','#F0E442','#6a3d9a','#999999','#444444'],a:['#009E73','#E69F00','#0072B2'],b:['#009E73','#56B4E9','#F0E442','#E69F00','#D55E00','#999999']}};
+const CKEY='sportmap.colors.v1';
+let CFG=JSON.parse(JSON.stringify(DEFCFG)),colGrp='t';
+try{const s=JSON.parse(localStorage.getItem(CKEY)||'null');if(s&&s.t&&s.t.length===DEFCFG.t.length&&s.a&&s.a.length===3&&s.b&&s.b.length===6)CFG=Object.assign(CFG,s)}catch(e){}
+function saveCfg(){try{localStorage.setItem(CKEY,JSON.stringify(CFG))}catch(e){}}
+const sameArr=(a,b)=>a.length===b.length&&a.every((x,i)=>x.toLowerCase()===b[i].toLowerCase());
+function isDefault(){return JSON.stringify(CFG)===JSON.stringify(DEFCFG)}
+function applyCfg(){
+ TYPES.forEach((x,i)=>{x[1]=CFG.t[i];TCOL[x[0]]=x[1]});ACCESS.forEach((x,i)=>{x[1]=CFG.a[i];ACOL[x[0]]=x[1]});BANDS.forEach((x,i)=>x[2]=CFG.b[i]);
+ const r=document.documentElement.style;r.setProperty('--land',CFG.land);r.setProperty('--pin',CFG.pin);
+ if(landPoly)landPoly.setStyle({color:CFG.land,fillColor:CFG.land,fillOpacity:CFG.fill/100,weight:CFG.wt});
+ if(map&&base!=='street')rings.forEach(x=>x.setStyle({color:CFG.ring}));
+ buildChips();syncChips();renderChipCounts();renderLegend();renderList();PLACES.forEach(styleMk);renderPresetState()}
+function renderPresetState(){
+ const cur=sameArr(CFG.t,DEFCFG.t)&&sameArr(CFG.a,DEFCFG.a)&&sameArr(CFG.b,DEFCFG.b)?'def':sameArr(CFG.t,PRESETS.hc.t)&&sameArr(CFG.a,PRESETS.hc.a)&&sameArr(CFG.b,PRESETS.hc.b)?'hc':sameArr(CFG.t,PRESETS.cb.t)&&sameArr(CFG.a,PRESETS.cb.a)&&sameArr(CFG.b,PRESETS.cb.b)?'cb':'';
+ document.querySelectorAll('#presetseg button').forEach(b=>setPressed(b,b.dataset.pre===cur));
+ $('#b-col').textContent=isDefault()?'':'ปรับแล้ว'}
+function colRows(){
+ const row=(lab,key,val)=>'<label class="crow"><span>'+lab+'</span><input type="color" data-k="'+key+'" value="'+val+'" aria-label="'+esc(lab)+'"></label>';
+ let h='';
+ if(colGrp==='t')h=TYPES.map((x,i)=>row(esc(x[0]),'t'+i,CFG.t[i])).join('');
+ else if(colGrp==='a')h=ACCESS.map((x,i)=>row(esc(x[0])+' ('+esc(x[2])+')','a'+i,CFG.a[i])).join('');
+ else if(colGrp==='b')h=BANDS.map((x,i)=>row(esc(x[1]),'b'+i,CFG.b[i])).join('');
+ else h=row('สีขอบและป้ายที่ดิน','land',CFG.land)+
+  '<label class="crow"><span>ความทึบพื้นที่ดิน</span><span class="ctl2"><input type="range" data-k="fill" min="0" max="70" step="5" value="'+CFG.fill+'"><output>'+CFG.fill+'%</output></span></label>'+
+  '<label class="crow"><span>ความหนาเส้นขอบที่ดิน</span><span class="ctl2"><input type="range" data-k="wt" min="1" max="6" step="1" value="'+CFG.wt+'"><output>'+CFG.wt+'</output></span></label>'+
+  row('สีวงรัศมี (ดาวเทียม)','ring',CFG.ring)+row('สีหมุดที่ปักเอง','pin',CFG.pin);
+ $('#colrows').innerHTML=h;
+ $('#colnote').textContent=colGrp==='t'?'':(colGrp==='o'?'':'ใช้เมื่อเลือก “สีของหมุด” ให้ตรงกลุ่มนี้')}
+$('#colrows').addEventListener('input',e=>{const el=e.target,k=el.dataset.k;if(!k)return;
+ if(k==='fill'||k==='wt'){CFG[k]=+el.value;el.nextElementSibling.textContent=k==='fill'?el.value+'%':el.value}
+ else if(/^[tab]\d+$/.test(k)){CFG[k[0]][+k.slice(1)]=el.value}
+ else CFG[k]=el.value;
+ if(/^[tab]\d+$/.test(k)){const cb={t:'type',a:'access',b:'band'}[k[0]];if(S.colorBy!==cb){S.colorBy=cb;document.querySelectorAll('#colorby button').forEach(x=>setPressed(x,x.dataset.v===cb))}}
+ saveCfg();applyCfgLight()});
+function applyCfgLight(){ // update without rebuilding the open colour inputs
+ TYPES.forEach((x,i)=>{x[1]=CFG.t[i];TCOL[x[0]]=x[1]});ACCESS.forEach((x,i)=>{x[1]=CFG.a[i];ACOL[x[0]]=x[1]});BANDS.forEach((x,i)=>x[2]=CFG.b[i]);
+ const r=document.documentElement.style;r.setProperty('--land',CFG.land);r.setProperty('--pin',CFG.pin);
+ if(landPoly)landPoly.setStyle({color:CFG.land,fillColor:CFG.land,fillOpacity:CFG.fill/100,weight:CFG.wt});
+ if(map&&base!=='street')rings.forEach(x=>x.setStyle({color:CFG.ring}));
+ document.querySelectorAll('.chip[data-t] .dot').forEach(d=>{const t=TYPES.find(x=>x[0]===d.parentNode.dataset.t);if(t)d.style.background=t[1]});
+ document.querySelectorAll('.chip[data-a] .dot').forEach(d=>{const a=ACCESS.find(x=>x[0]===d.parentNode.dataset.a);if(a)d.style.background=a[1]});
+ renderLegend();renderList();PLACES.forEach(styleMk);renderPresetState()}
+document.querySelectorAll('#colgrp button').forEach(b=>b.onclick=()=>{colGrp=b.dataset.g;document.querySelectorAll('#colgrp button').forEach(x=>setPressed(x,x===b));colRows()});
+document.querySelectorAll('#presetseg button').forEach(b=>b.onclick=()=>{const p=b.dataset.pre,src=p==='def'?DEFCFG:PRESETS[p];
+ CFG.t=src.t.slice();CFG.a=src.a.slice();CFG.b=src.b.slice();saveCfg();applyCfg();colRows()});
+$('#colreset').onclick=()=>{CFG=JSON.parse(JSON.stringify(DEFCFG));saveCfg();applyCfg();colRows()};
+
 /* ---------- panel summaries ---------- */
 function renderSummaries(){
  const set=(id,txt)=>{const el=$('#'+id);if(el)el.textContent=txt};
@@ -391,7 +487,7 @@ function renderSummaries(){
  if(S.maxR<99)parts.push('รัศมี ≤ '+S.maxR+' กม.');
  if(hiddenLayers)parts.push('ซ่อนบางชั้นข้อมูล');
  $('#activebar').hidden=!parts.length;$('#activetxt').textContent=parts.length?'ใช้ตัวกรอง: '+parts.join(' · '):''}
-function clearAll(){S.types.clear();S.sports.clear();S.access.clear();S.layers={sport:true,svc:true};S.maxR=99;S.q='';$('#gq').value='';$('#gres').innerHTML='';$('#qhint').textContent=HINT;syncChips();refilter()}
+function clearAll(){S.types.clear();S.sports.clear();S.access.clear();S.layers={sport:true,svc:true};S.maxR=99;S.q='';$('#gq').value='';$('#gres').innerHTML='';setHint('');syncChips();refilter()}
 $('#clearall').onclick=clearAll;
 document.addEventListener('keydown',e=>{if(e.key==='Escape'){if(pinMk||!$('#card').hidden||$('#gres').innerHTML){closePin();const o=S.sel;S.sel=null;markList();PLACES.forEach(q=>{if(q.id===o)styleMk(q)})}}});
 document.querySelectorAll('#tabs button').forEach(b=>b.onclick=()=>{document.querySelectorAll('#tabs button').forEach(x=>x.setAttribute('aria-selected',x===b));
@@ -419,19 +515,20 @@ function syncChips(){
  document.querySelectorAll('[data-a]').forEach(el=>setPressed(el,S.access.has(el.dataset.a)));
  document.querySelectorAll('[data-t]').forEach(el=>setPressed(el,S.types.has(el.dataset.t)));
  $('#rad').value=Math.max(0,RADS.indexOf(S.maxR));$('#radout').textContent=S.maxR>=99?'ทุกระยะ':'≤ '+S.maxR+' กม.'}
-function preset(k){S.types.clear();S.sports.clear();S.access.clear();S.layers={sport:true,svc:true};S.maxR=99;S.q='';$('#gq').value='';$('#gres').innerHTML='';$('#qhint').textContent=HINT;
+function preset(k){S.types.clear();S.sports.clear();S.access.clear();S.layers={sport:true,svc:true};S.maxR=99;S.q='';$('#gq').value='';$('#gres').innerHTML='';setHint('');
  if(k==='multi'){S.types.add('Multi-sport complex');S.layers.svc=false}
  if(k==='free'){S.access.add('สาธารณะ');S.access.add('ผสม');S.layers.svc=false}
  if(k==='near')S.maxR=5;
  if(k==='sportonly')S.layers.svc=false;
  syncChips();refilter();fitKm(S.maxR<99?S.maxR:20)}
 $('#rad').oninput=e=>{S.maxR=RADS[+e.target.value];syncChips();refilter()};
-let qt;$('#gq').addEventListener('input',e=>{clearTimeout(qt);const v=e.target.value.trim();qt=setTimeout(()=>{
- if(!v){S.q='';searchTok++;$('#gres').innerHTML='';$('#qhint').textContent=HINT}
- else if(COORD.test(v)){S.q='';$('#qhint').textContent='พบพิกัด กด Enter เพื่อวางหมุด'}
+$('#gclr').onclick=()=>{clearResults();$('#gq').focus()};
+let qt;$('#gq').addEventListener('input',e=>{clearTimeout(qt);const v=e.target.value.trim();$('#gclr').hidden=!e.target.value;searchTok++;$('#gres').innerHTML='';qt=setTimeout(()=>{
+ if(!v){S.q='';searchTok++;$('#gres').innerHTML='';setHint('')}
+ else if(COORD.test(v)){S.q='';setHint('พบพิกัด กด Enter เพื่อวางหมุด')}
  else{S.q=v;const n=PLACES.filter(matchesText).length;
-  if(n){$('#qhint').textContent='พบ '+n+' แห่งในข้อมูลที่รวบรวมไว้ · กด Enter เพื่อค้นหาทั่วไทย'}
-  else{S.q='';$('#qhint').textContent='ไม่พบในข้อมูลที่รวบรวมไว้ (แผนที่แสดงทั้งหมดตามเดิม) · กด Enter เพื่อค้นหาทั่วไทย'}}
+  if(n){setHint('พบ '+n+' แห่งในข้อมูลที่รวบรวมไว้ · กด Enter เพื่อค้นหาทั่วไทย')}
+  else{S.q='';setHint('ไม่พบในข้อมูลที่รวบรวมไว้ (แผนที่แสดงทั้งหมดตามเดิม) · กด Enter เพื่อค้นหาทั่วไทย')}}
  refilter()},150)});
 $('#sizerev').onchange=e=>{S.sizeRev=e.target.checked;PLACES.forEach(styleMk)};
 $('#togglepanel').onclick=()=>{$('#app').classList.toggle('nopanel');if(map)setTimeout(()=>map.invalidateSize(),60)};
@@ -443,7 +540,7 @@ function setBase(v){base=v;if(!map)return;
  Object.values(baseLayers).forEach(l=>{if(map.hasLayer(l))map.removeLayer(l)});
  if(v==='street'){baseLayers.osm.addTo(map)}
  else{baseLayers.img.addTo(map);if(v==='sathy')baseLayers.lab.addTo(map)}
- const sat=v!=='street';rings.forEach(r=>r.setStyle({color:sat?'#ffffff':'#0f6b57'}));
+ const sat=v!=='street';rings.forEach(r=>r.setStyle({color:sat?CFG.ring:'#0f6b57'}));
  document.body.classList.toggle('street',!sat)}
 function noMap(msg){const m=$('#map');m.classList.add('nokey');m.innerHTML='<div class="nokeybox"><h2>แผนที่โหลดไม่สำเร็จ</h2><p>'+msg+'</p></div>';refilter()}
 function initMap(){
@@ -457,10 +554,10 @@ function initMap(){
  baseLayers.osm=L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png',{maxZoom:20,maxNativeZoom:19,attribution:'© <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener">OpenStreetMap</a> contributors'});
  // rings + labels
  [3,5,10,15,20].forEach(km=>{
-  rings.push(L.circle([LAT0,LON0],{radius:km*1000,fill:false,color:'#ffffff',weight:1.4,opacity:.85,dashArray:'6 6',interactive:false}).addTo(map));
+  rings.push(L.circle([LAT0,LON0],{radius:km*1000,fill:false,color:CFG.ring,weight:1.4,opacity:.85,dashArray:'6 6',interactive:false}).addTo(map));
   L.marker([LAT0+km/KY,LON0],{icon:L.divIcon({className:'mkw',html:'<div class="ringlab">'+km+' กม.</div>',iconSize:[0,0]}),interactive:false,keyboard:false}).addTo(map)});
  // land
- const poly=L.polygon(CORNERS,{color:'#ff6a3d',weight:3,fillColor:'#ff6a3d',fillOpacity:.25}).addTo(map);
+ const poly=landPoly=L.polygon(CORNERS,{color:CFG.land,weight:CFG.wt,fillColor:CFG.land,fillOpacity:CFG.fill/100}).addTo(map);
  poly.on('click',e=>{L.DomEvent.stopPropagation(e);if(S.tool){dropPin(e.latlng.lat,e.latlng.lng,'หมุดที่วางไว้','');return}showLand()});
  L.marker([LAT0,LON0],{icon:L.divIcon({className:'mkw',html:'<div class="landlab">ที่ดิน 14 ไร่</div>',iconSize:[0,0]}),interactive:false,keyboard:false,zIndexOffset:500}).addTo(map);
  cornerMks=CORNERS.map((c,i)=>L.marker(c,{icon:L.divIcon({className:'mkw',html:'<div class="cornerlab">มุม '+'ABCD'[i]+'</div>',iconSize:[0,0]}),interactive:false,keyboard:false}));
@@ -480,7 +577,7 @@ async function gsearch(){
   const u='https://nominatim.openstreetmap.org/search?format=jsonv2&limit=6&accept-language=th&countrycodes=th&q='+encodeURIComponent(q)+'&viewbox=100.3,14.1,101.2,13.4&bounded=0';
   const r=await fetch(u);if(!r.ok)throw new Error(r.status);const a=await r.json();if(tok!==searchTok)return;
   if(!a.length){box.innerHTML='<p class="hint">ไม่พบ “'+esc(q)+'” ลองใส่ชื่อให้เต็มขึ้น หรือ <a target="_blank" rel="noopener" href="https://www.google.com/maps/search/'+encodeURIComponent(q)+'/@'+LAT0.toFixed(5)+','+LON0.toFixed(5)+',13z">ค้นใน Google Maps ↗</a></p>';return}
-  box.innerHTML='<div class="gh"><span>ผลการค้นหา '+a.length+' รายการ</span><button type="button" id="gclose">ปิดผลค้นหา ×</button></div>'+a.map((x,i)=>'<button type="button" class="gr" data-i="'+i+'"><b>'+esc(x.name||x.display_name.split(',')[0])+'</b><span>'+esc(x.display_name)+'</span></button>').join('');
+  setHint('');box.innerHTML='<div class="gh"><span>ผลการค้นหา '+a.length+' รายการ</span><button type="button" id="gclose">ปิดผลค้นหา ×</button></div>'+a.map((x,i)=>'<button type="button" class="gr" data-i="'+i+'"><b>'+esc(x.name||x.display_name.split(',')[0])+'</b><span>'+esc(x.display_name)+'</span></button>').join('');
   $('#gclose').onclick=clearResults;
   box.querySelectorAll('.gr').forEach(b=>b.onclick=()=>{const x=a[+b.dataset.i],la=+x.lat,lo=+x.lon;box.innerHTML='';
    if(x.boundingbox){map.fitBounds([[+x.boundingbox[0],+x.boundingbox[2]],[+x.boundingbox[1],+x.boundingbox[3]]],{maxZoom:17})}else map.flyTo([la,lo],17);
@@ -488,7 +585,7 @@ async function gsearch(){
  }catch(e){if(tok!==searchTok)return;box.innerHTML='<p class="hint">ค้นหาไม่สำเร็จ ('+esc(e.message||e)+') ลองใหม่อีกครั้ง</p>'}}
 $('#gform').addEventListener('submit',e=>{e.preventDefault();gsearch()});
 
-buildChips();syncChips();refilter();initMap();
+applyCfg();colRows();refilter();initMap();
 })();
 </script>
 </body>
